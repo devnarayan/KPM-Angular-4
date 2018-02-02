@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UserDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bureau">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchId" Type="int" Nullable="false" />
+          <Property Name="BureauName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProgramArea">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BureauId" Type="int" />
+          <Property Name="ProgramAreaName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ScheduleTypeId" Type="int" Nullable="false" />
+          <Property Name="WeekDays" Type="varchar" MaxLength="20" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="StartTime" Type="time" Precision="0" />
+          <Property Name="EndTime" Type="time" Precision="0" />
+          <Property Name="StartAtOpen" Type="bit" Nullable="false" />
+          <Property Name="EndAtClose" Type="bit" Nullable="false" />
+          <Property Name="DurationDays" Type="int" />
+          <Property Name="DurationHours" Type="int" />
+          <Property Name="IntervalHours" Type="int" />
+          <Property Name="IntervalDays" Type="int" />
+          <Property Name="Recurring" Type="bit" Nullable="false" />
+          <Property Name="LastModified" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScheduleType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ScheduleName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Workgroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProgramAreaId" Type="int" Nullable="false" />
+          <Property Name="WorkgroupName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bureau_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Bureau" Type="Self.Bureau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bureau">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgramArea_Bureau">
+          <End Role="Bureau" Type="Self.Bureau" Multiplicity="0..1" />
+          <End Role="ProgramArea" Type="Self.ProgramArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bureau">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProgramArea">
+              <PropertyRef Name="BureauId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workgroup_ProgramArea">
+          <End Role="ProgramArea" Type="Self.ProgramArea" Multiplicity="1" />
+          <End Role="Workgroup" Type="Self.Workgroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramArea">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workgroup">
+              <PropertyRef Name="ProgramAreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UserDBModelStoreContainer">
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bureau" EntityType="Self.Bureau" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgramArea" EntityType="Self.ProgramArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduleType" EntityType="Self.ScheduleType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblUser" EntityType="Self.TblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workgroup" EntityType="Self.Workgroup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bureau_Branch" Association="Self.FK_Bureau_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Bureau" EntitySet="Bureau" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgramArea_Bureau" Association="Self.FK_ProgramArea_Bureau">
+            <End Role="Bureau" EntitySet="Bureau" />
+            <End Role="ProgramArea" EntitySet="ProgramArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workgroup_ProgramArea" Association="Self.FK_Workgroup_ProgramArea">
+            <End Role="ProgramArea" EntitySet="ProgramArea" />
+            <End Role="Workgroup" EntitySet="Workgroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UserDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="UserDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblUsers" EntityType="Self.TblUser" />
+          <EntitySet Name="Branches" EntityType="UserDBModel.Branch" />
+          <EntitySet Name="Bureaux" EntityType="UserDBModel.Bureau" />
+          <EntitySet Name="ProgramAreas" EntityType="UserDBModel.ProgramArea" />
+          <EntitySet Name="Workgroups" EntityType="UserDBModel.Workgroup" />
+          <AssociationSet Name="FK_Bureau_Branch" Association="UserDBModel.FK_Bureau_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Bureau" EntitySet="Bureaux" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgramArea_Bureau" Association="UserDBModel.FK_ProgramArea_Bureau">
+            <End Role="Bureau" EntitySet="Bureaux" />
+            <End Role="ProgramArea" EntitySet="ProgramAreas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workgroup_ProgramArea" Association="UserDBModel.FK_Workgroup_ProgramArea">
+            <End Role="ProgramArea" EntitySet="ProgramAreas" />
+            <End Role="Workgroup" EntitySet="Workgroups" />
+          </AssociationSet>
+          <EntitySet Name="Schedules" EntityType="UserDBModel.Schedule" />
+          <EntitySet Name="ScheduleTypes" EntityType="UserDBModel.ScheduleType" />
+        </EntityContainer>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bureaux" Relationship="UserDBModel.FK_Bureau_Branch" FromRole="Branch" ToRole="Bureau" />
+        </EntityType>
+        <EntityType Name="Bureau">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchId" Type="Int32" Nullable="false" />
+          <Property Name="BureauName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Branch" Relationship="UserDBModel.FK_Bureau_Branch" FromRole="Bureau" ToRole="Branch" />
+          <NavigationProperty Name="ProgramAreas" Relationship="UserDBModel.FK_ProgramArea_Bureau" FromRole="Bureau" ToRole="ProgramArea" />
+        </EntityType>
+        <EntityType Name="ProgramArea">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BureauId" Type="Int32" />
+          <Property Name="ProgramAreaName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bureau" Relationship="UserDBModel.FK_ProgramArea_Bureau" FromRole="ProgramArea" ToRole="Bureau" />
+          <NavigationProperty Name="Workgroups" Relationship="UserDBModel.FK_Workgroup_ProgramArea" FromRole="ProgramArea" ToRole="Workgroup" />
+        </EntityType>
+        <EntityType Name="Workgroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProgramAreaId" Type="Int32" Nullable="false" />
+          <Property Name="WorkgroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProgramArea" Relationship="UserDBModel.FK_Workgroup_ProgramArea" FromRole="Workgroup" ToRole="ProgramArea" />
+        </EntityType>
+        <Association Name="FK_Bureau_Branch">
+          <End Type="UserDBModel.Branch" Role="Branch" Multiplicity="1" />
+          <End Type="UserDBModel.Bureau" Role="Bureau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bureau">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgramArea_Bureau">
+          <End Type="UserDBModel.Bureau" Role="Bureau" Multiplicity="0..1" />
+          <End Type="UserDBModel.ProgramArea" Role="ProgramArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bureau">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProgramArea">
+              <PropertyRef Name="BureauId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workgroup_ProgramArea">
+          <End Type="UserDBModel.ProgramArea" Role="ProgramArea" Multiplicity="1" />
+          <End Type="UserDBModel.Workgroup" Role="Workgroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramArea">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workgroup">
+              <PropertyRef Name="ProgramAreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduleTypeId" Type="Int32" Nullable="false" />
+          <Property Name="WeekDays" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="Time" Precision="0" />
+          <Property Name="EndTime" Type="Time" Precision="0" />
+          <Property Name="StartAtOpen" Type="Boolean" Nullable="false" />
+          <Property Name="EndAtClose" Type="Boolean" Nullable="false" />
+          <Property Name="DurationDays" Type="Int32" />
+          <Property Name="DurationHours" Type="Int32" />
+          <Property Name="IntervalHours" Type="Int32" />
+          <Property Name="IntervalDays" Type="Int32" />
+          <Property Name="Recurring" Type="Boolean" Nullable="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="2" />
+        </EntityType>
+        <EntityType Name="ScheduleType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UserDBModelStoreContainer" CdmEntityContainer="UserDBEntities">
+          <EntitySetMapping Name="TblUsers">
+            <EntityTypeMapping TypeName="UserDBModel.TblUser">
+              <MappingFragment StoreEntitySet="TblUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="UserDBModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bureaux">
+            <EntityTypeMapping TypeName="UserDBModel.Bureau">
+              <MappingFragment StoreEntitySet="Bureau">
+                <ScalarProperty Name="BureauName" ColumnName="BureauName" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgramAreas">
+            <EntityTypeMapping TypeName="UserDBModel.ProgramArea">
+              <MappingFragment StoreEntitySet="ProgramArea">
+                <ScalarProperty Name="ProgramAreaName" ColumnName="ProgramAreaName" />
+                <ScalarProperty Name="BureauId" ColumnName="BureauId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workgroups">
+            <EntityTypeMapping TypeName="UserDBModel.Workgroup">
+              <MappingFragment StoreEntitySet="Workgroup">
+                <ScalarProperty Name="WorkgroupName" ColumnName="WorkgroupName" />
+                <ScalarProperty Name="ProgramAreaId" ColumnName="ProgramAreaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="UserDBModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Recurring" ColumnName="Recurring" />
+                <ScalarProperty Name="IntervalDays" ColumnName="IntervalDays" />
+                <ScalarProperty Name="IntervalHours" ColumnName="IntervalHours" />
+                <ScalarProperty Name="DurationHours" ColumnName="DurationHours" />
+                <ScalarProperty Name="DurationDays" ColumnName="DurationDays" />
+                <ScalarProperty Name="EndAtClose" ColumnName="EndAtClose" />
+                <ScalarProperty Name="StartAtOpen" ColumnName="StartAtOpen" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
+                <ScalarProperty Name="ScheduleTypeId" ColumnName="ScheduleTypeId" />
+                <ScalarProperty Name="ScheduleName" ColumnName="ScheduleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduleTypes">
+            <EntityTypeMapping TypeName="UserDBModel.ScheduleType">
+              <MappingFragment StoreEntitySet="ScheduleType">
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="ScheduleName" ColumnName="ScheduleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

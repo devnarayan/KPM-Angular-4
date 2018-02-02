@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Socal Scholarship</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="~/Content/animate.min.css">
+
+    <link rel="stylesheet" href="~/Content/et-line-font.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/Content/vegas.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x31">
+
+    <link href='https://fonts.googleapis.com/css?family=Rajdhani:400,500,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!-- preloader section -->
+    <section class="preloader">
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-default socal-navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="images/logo.png"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/Athletes">Athletes</a></li>
+                    <li><a href="/Membership">Services & Memberships</a></li>
+                    <li><a href="#">About Mike</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right socal-rightheader">
+                    <li><a class="btn joinus-btn" href="#">Join Us</a></li>
+                    <li><a class="btn ques-btn" href="#">Ask A Question</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    @RenderBody()
+
+
+    <!-- footer section -->
+    <!-- Back top -->
+    <a href="#back-top" class="go-top"><i class="fa fa-angle-up"></i></a>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sitejs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
