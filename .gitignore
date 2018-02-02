@@ -1,5 +1,4 @@
-1. Source Code/KPMAnalysis/packages/
-1. Source Code/KPMWebApp/.vs/
+packages/
 node_modules/
 bin/
 obj/
